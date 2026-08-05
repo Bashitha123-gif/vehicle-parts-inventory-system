@@ -1,0 +1,47 @@
+nest g module users
+nest g controller users
+nest g service users
+
+nest g module dashboard
+nest g controller dashboard
+nest g service dashboard
+
+nest g module categories
+nest g controller categories
+nest g service categories
+
+nest g module brands
+nest g controller brands
+nest g service brands
+
+nest g module vehicle-models
+nest g controller vehicle-models
+nest g service vehicle-models
+
+nest g module suppliers
+nest g controller suppliers
+nest g service suppliers
+
+nest g module products
+nest g controller products
+nest g service products
+
+nest g module customers
+nest g controller customers
+nest g service customers
+
+nest g module purchases
+nest g controller purchases
+nest g service purchases
+
+nest g module sales
+nest g controller sales
+nest g service sales
+
+nest g module stock
+nest g controller stock
+nest g service stock
+
+nest g module reports
+nest g controller reports
+nest g service reports
