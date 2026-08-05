@@ -24,11 +24,24 @@ export class CategoriesService {
 
   // GET ALL
 
-  async findAll() {
+  async findAll(query: any, search?: string) {
+    const page = Number(query.page) || 1;
+
+    const limit = Number(query.limit) || 10;
+
     return this.prisma.category.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
+      skip: (page - 1) * limit,
+
+      take: limit,
+
+      where: search
+        ? {
+            name: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          }
+        : {},
     });
   }
 

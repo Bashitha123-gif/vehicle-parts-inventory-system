@@ -17,6 +17,12 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+import { Roles } from '../auth/decorators/roles.decorator';
+
+import { Query } from '@nestjs/common';
+
+import { PaginationDto } from '../common/dto/pagination.dto';
+
 @Controller('categories')
 @UseGuards(JwtAuthGuard)
 export class CategoriesController {
@@ -25,6 +31,7 @@ export class CategoriesController {
   // CREATE
 
   @Post()
+  @Roles('ADMIN')
   create(@Body() dto: CreateCategoryDto) {
     return this.service.create(dto);
   }
@@ -32,8 +39,10 @@ export class CategoriesController {
   // GET ALL
 
   @Get()
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query('search') search?:string,
+    @Query() query?:PaginationDto
+  ) {
+    return this.service.findAll(query, search);
   }
 
   // GET ONE
@@ -46,6 +55,7 @@ export class CategoriesController {
   // UPDATE
 
   @Patch(':id')
+  @Roles('ADMIN')
   update(
     @Param('id') id: string,
 
@@ -57,7 +67,10 @@ export class CategoriesController {
   // DELETE
 
   @Delete(':id')
+  @Roles('ADMIN')
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
+
+  
 }
