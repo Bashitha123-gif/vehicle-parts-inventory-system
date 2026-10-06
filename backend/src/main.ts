@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import compression from 'compression';
-
+import 'dotenv/config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {

@@ -6,16 +6,16 @@ import {
 
 import { PrismaService } from '../prisma/prisma.service';
 
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
-import { CategoryQueryDto } from './dto/category-query.dto';
+import { CreateBrandDto } from './dto/create-brand.dto';
+import { UpdateBrandDto } from './dto/update-brand.dto';
+import { BrandQueryDto } from './dto/brand-query.dto';
 
 @Injectable()
-export class CategoryService {
+export class BrandService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateCategoryDto) {
-    const existing = await this.prisma.category.findFirst({
+  async create(dto: CreateBrandDto) {
+    const existing = await this.prisma.brand.findFirst({
       where: {
         name: {
           equals: dto.name,
@@ -25,18 +25,17 @@ export class CategoryService {
     });
 
     if (existing) {
-      throw new ConflictException('Category already exists');
+      throw new ConflictException('Brand already exists');
     }
 
-    return this.prisma.category.create({
+    return this.prisma.brand.create({
       data: {
         name: dto.name,
-        description: dto.description,
       },
     });
   }
 
-  async findAll(query: CategoryQueryDto) {
+  async findAll(query: BrandQueryDto) {
     const page = query.page ?? 1;
     const limit = query.limit ?? 10;
 
@@ -51,8 +50,8 @@ export class CategoryService {
         }
       : {};
 
-    const [categories, total] = await Promise.all([
-      this.prisma.category.findMany({
+    const [brands, total] = await Promise.all([
+      this.prisma.brand.findMany({
         where,
         skip,
         take: limit,
@@ -61,13 +60,13 @@ export class CategoryService {
         },
       }),
 
-      this.prisma.category.count({
+      this.prisma.brand.count({
         where,
       }),
     ]);
 
     return {
-      data: categories,
+      data: brands,
       meta: {
         total,
         page,
@@ -78,22 +77,22 @@ export class CategoryService {
   }
 
   async findOne(id: string) {
-    const category = await this.prisma.category.findUnique({
+    const brand = await this.prisma.brand.findUnique({
       where: { id },
     });
 
-    if (!category) {
-      throw new NotFoundException('Category not found');
+    if (!brand) {
+      throw new NotFoundException('Brand not found');
     }
 
-    return category;
+    return brand;
   }
 
-  async update(id: string, dto: UpdateCategoryDto) {
+  async update(id: string, dto: UpdateBrandDto) {
     await this.findOne(id);
 
     if (dto.name) {
-      const existing = await this.prisma.category.findFirst({
+      const existing = await this.prisma.brand.findFirst({
         where: {
           name: {
             equals: dto.name,
@@ -106,11 +105,11 @@ export class CategoryService {
       });
 
       if (existing) {
-        throw new ConflictException('Category already exists');
+        throw new ConflictException('Brand already exists');
       }
     }
 
-    return this.prisma.category.update({
+    return this.prisma.brand.update({
       where: { id },
       data: dto,
     });
@@ -119,7 +118,7 @@ export class CategoryService {
   async remove(id: string) {
     await this.findOne(id);
 
-    return this.prisma.category.delete({
+    return this.prisma.brand.delete({
       where: { id },
     });
   }

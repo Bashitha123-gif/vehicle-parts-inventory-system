@@ -1,76 +1,60 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Patch,
-  Delete,
   Body,
+  Controller,
+  Delete,
+  Get,
   Param,
+  Patch,
+  Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 
-import { CategoriesService } from './categories.service';
-
+import { CategoryService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
-
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryQueryDto } from './dto/category-query.dto';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-
+import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 
-import { Query } from '@nestjs/common';
-
-import { PaginationDto } from '../common/dto/pagination.dto';
-
-@Controller('categories')
 @UseGuards(JwtAuthGuard)
-export class CategoriesController {
-  constructor(private service: CategoriesService) {}
-
-  // CREATE
+@Controller('categories')
+export class CategoryController {
+  constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('Admin')
   create(@Body() dto: CreateCategoryDto) {
-    return this.service.create(dto);
+    return this.categoryService.create(dto);
   }
-
-  // GET ALL
 
   @Get()
-  findAll(@Query('search') search?:string,
-    @Query() query?:PaginationDto
-  ) {
-    return this.service.findAll(query, search);
+  findAll(@Query() query: CategoryQueryDto) {
+    return this.categoryService.findAll(query);
   }
-
-  // GET ONE
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.service.findOne(id);
+    return this.categoryService.findOne(id);
   }
-
-  // UPDATE
 
   @Patch(':id')
-  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('Admin')
   update(
     @Param('id') id: string,
-
     @Body() dto: UpdateCategoryDto,
   ) {
-    return this.service.update(id, dto);
+    return this.categoryService.update(id, dto);
   }
-
-  // DELETE
 
   @Delete(':id')
-  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('Admin')
   remove(@Param('id') id: string) {
-    return this.service.remove(id);
+    return this.categoryService.remove(id);
   }
-
-  
 }

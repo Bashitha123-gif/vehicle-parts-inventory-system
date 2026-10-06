@@ -10,6 +10,7 @@ import Suppliers from "@/pages/suppliers/Suppliers";
 import Customers from "@/pages/customers/Customers";
 import Purchases from "@/pages/purchases/Purchases";
 import Sales from "@/pages/sales/Sales";
+import PointOfSale from "@/pages/sales/PointOfSale";
 import Reports from "@/pages/reports/Reports";
 import SettingsPage from "@/pages/settings/Settings";
 import NotFound from "@/pages/NotFound";
@@ -27,6 +28,7 @@ export function AppRoutes() {
           <Route path="/brands" element={<Brands />} />
           <Route path="/purchases" element={<Purchases />} />
           <Route path="/sales" element={<Sales />} />
+          <Route path="/pos" element={<PointOfSale />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/reports" element={<Reports />} />

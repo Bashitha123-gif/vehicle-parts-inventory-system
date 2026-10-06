@@ -8,6 +8,7 @@ import {
   ChevronsRight,
   LayoutDashboard,
   Package,
+  ReceiptText,
   Settings,
   ShoppingCart,
   Tags,
@@ -33,6 +34,7 @@ const inventoryItems: NavItem[] = [
 const mainItems: NavItem[] = [
   { label: "Purchases", to: "/purchases", icon: Truck },
   { label: "Sales", to: "/sales", icon: ShoppingCart },
+  { label: "Point of Sale", to: "/pos", icon: ReceiptText },
   { label: "Suppliers", to: "/suppliers", icon: Wrench },
   { label: "Customers", to: "/customers", icon: Users },
   { label: "Reports", to: "/reports", icon: BarChart3 },

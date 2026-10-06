@@ -8,6 +8,7 @@ import {
   Truck,
   Users,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   Bar,
   BarChart,
@@ -93,9 +94,11 @@ export default function Dashboard() {
         actions={
           <>
             <Button variant="outline">Export</Button>
-            <Button variant="secondary" leftIcon={<ShoppingCart className="h-4 w-4" />}>
-              New Sale
-            </Button>
+            <Link to="/pos">
+              <Button variant="secondary" leftIcon={<ShoppingCart className="h-4 w-4" />}>
+                New Sale
+              </Button>
+            </Link>
           </>
         }
       />
